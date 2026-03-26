@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ArchitecturePage from "./ArchitecturePage.jsx";
 
 // ── Glean Design Tokens ──
 // Primary: #3B5EFB, Background: #F7F8FA, Border: #E8EBF0
@@ -891,12 +892,31 @@ export default function GleanCapPrototype() {
     portfolio: <PortfolioView />,
     network: <NetworkView />,
     analyst: <AnalystView />,
+    architecture: <ArchitecturePage onBack={() => setActiveView("thesis")} />,
   };
 
   return (
     <div style={{ display: "flex", height: "100vh", background: "#F7F8FA", fontFamily: "'Inter', 'Polysans', system-ui, -apple-system, sans-serif", overflow: "hidden" }}>
       <Sidebar activeView={activeView} setActiveView={setActiveView} />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", background: "#FAFBFC" }}>{views[activeView]}</div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", background: "#FAFBFC", position: "relative" }}>
+        {activeView !== "architecture" && (
+          <button
+            onClick={() => setActiveView("architecture")}
+            style={{
+              position: "absolute", top: 12, right: 20, zIndex: 50,
+              display: "flex", alignItems: "center", gap: 6,
+              padding: "6px 12px", borderRadius: 8,
+              background: "#FFFFFF", border: "1px solid #E8EBF0",
+              fontSize: 12, fontWeight: 500, color: "#4A5068",
+              cursor: "pointer", boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="5" width="5" height="4" rx="0.5" stroke="#3B5EFB" strokeWidth="1.2"/><rect x="8" y="5" width="5" height="4" rx="0.5" stroke="#3B5EFB" strokeWidth="1.2"/><path d="M7 2v3M3.5 9v2M10.5 9v2M3.5 11h7" stroke="#3B5EFB" strokeWidth="1.2" strokeLinecap="round"/></svg>
+            Architecture
+          </button>
+        )}
+        {views[activeView]}
+      </div>
     </div>
   );
 }
